@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  get "/posts" => "posts#index"
+  get "/api/posts" => "posts#index"
 end
