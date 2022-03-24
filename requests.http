@@ -1,5 +1,6 @@
 @hostname = http://localhost:3000
 
+
 ## Posts show
 GET https://api.hatchways.io/assessment/blog/posts?tag=tech
 Content-Type: application/json
