@@ -9,7 +9,14 @@ class PostsController < ApplicationController
   end
 
   def index
-    response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=tech").parse(:json)
-    render json: response
+    if params[:tag]
+      response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=#{params[:tag]}").parse(:json)
+      render json: response
+    elsif params[:tags]
+      tags = params[:tags].split(",")
+      # render json: tags
+      response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=#{tags[0]}").parse(:json)
+      render json: response
+    end
   end
 end
