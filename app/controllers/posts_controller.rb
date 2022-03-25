@@ -2,15 +2,15 @@ class PostsController < ApplicationController
   def ping
     response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=tech")
     if response.status.success? == true
-      render json: { message: "successful" }
+      render json: { "success": true }, status: :ok
     else
-      render json: { message: "failed" }
+      render json: { "success": false }
     end
   end
 
   def index
     if params[:tag]
-      response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=#{params[:tag]}").parse(:json)
+      response = HTTP.get("https://api.hatchways.io/assessment/blog/posts?tag=#{params[:tag]}").body #.parse(:json)
       render json: response
     elsif params[:tags]
       tags = params[:tags].split(",")
@@ -42,7 +42,9 @@ class PostsController < ApplicationController
           end
         end
       end
-      render json: posts
+      render json: { "posts": posts }
+    else
+      render json: { "error": "Tags parameter is required" }, status: :bad_request
     end
   end
 end
